@@ -1,0 +1,191 @@
+:root {
+  --roxo: #281044;
+  --violeta: #6422ab;
+  --lilas: #dfbfff;
+  --papel: #faf7fc;
+  --tinta: #22152e;
+  --linha: #dfd2e8;
+  font: 1rem/1.5 system-ui, sans-serif;
+  color: var(--tinta);
+  background: var(--papel);
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid #a965ff; outline-offset: 3px; }
+header, .mobile, dialog { background: var(--roxo); color: white; }
+.barra, main, footer { width: min(1120px, 100% - 36px); margin-inline: auto; }
+.barra { display: flex; min-height: 68px; align-items: center; gap: 18px; }
+.barra nav { display: flex; gap: 24px; margin-left: auto; }
+.marca { text-decoration: none; font: italic 950 2.1rem/1 system-ui; letter-spacing: -.1em; }
+.marca span, .mobile span { color: var(--lilas); }
+main { padding-block: 32px 56px; }
+.edicao { display: flex; justify-content: space-between; gap: 12px; color: var(--violeta); font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+h1 { margin: 8px 0 24px; font-size: clamp(2.6rem, 6vw, 5rem); line-height: 1; letter-spacing: -.065em; }
+.destaques { display: grid; grid-template-columns: 1.2fr 1fr; grid-template-rows: repeat(2, 210px); gap: 12px; }
+.manchete { position: relative; display: flex; align-items: end; isolation: isolate; overflow: hidden; background: var(--roxo); color: white; text-decoration: none; }
+.manchete:first-child { grid-row: span 2; }
+.manchete img, .manchete::after { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; }
+.manchete::after { content: ''; background: linear-gradient(to top, #140a20f5 0%, #140a20c9 25%, #140a2066 49%, transparent 76%); }
+.manchete h2 { margin: 0; padding: 20px; font-size: clamp(1.4rem, 2.6vw, 2.25rem); line-height: 1.06; letter-spacing: -.04em; text-shadow: 0 2px 8px #140a20cc; }
+.manchete:first-child h2 { font-size: clamp(2.1rem, 4vw, 3.5rem); }
+img { display: block; object-fit: cover; }
+#ultimas h2 { margin: 38px 0 0; border-bottom: 3px solid var(--violeta); }
+.noticia { display: flex; gap: 18px; align-items: center; padding-block: 14px; border-bottom: 1px solid var(--linha); color: var(--violeta); text-decoration: none; }
+.noticia h3 { margin: 0; }
+.noticia img { width: min(30%, 180px); aspect-ratio: 16/10; }
+.manchete:hover h2, .noticia:hover h3 { text-decoration: underline; }
+article { max-width: 760px; margin-inline: auto; font-size: 1.2rem; }
+article a { color: var(--violeta); }
+article img { width: 100%; aspect-ratio: 16/9; background: var(--roxo); }
+footer { padding-block: 20px; border-top: 1px solid var(--linha); }
+.mobile { display: none; }
+dialog { width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; border: 0; padding: 24px; }
+dialog a { display: block; padding-block: 12px; }
+dialog form { text-align: right; }
+button { font: inherit; cursor: pointer; }
+@media (max-width: 640px) {
+  body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
+  .barra nav { display: none; }
+  .destaques { grid-template-columns: 1fr; grid-template-rows: 285px repeat(2, 185px); }
+  .manchete:first-child { grid-row: auto; }
+  .mobile { position: fixed; z-index: 2; bottom: 0; inset-inline: 0; display: flex; justify-content: space-around; padding: 8px 0 calc(8px + env(safe-area-inset-bottom)); }
+  .mobile a, .mobile button { min-width: 54px; text-align: center; color: inherit; background: none; border: 0; text-decoration: none; font-size: .85rem; }
+  .mobile span { display: block; font-size: 1.3rem; line-height: 1.2; }
+}
+
+article .tabela-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .65rem 1rem;
+  background: var(--violeta);
+  color: white;
+  font-weight: 700;
+  text-decoration: none;
+}
+article .tabela-link:hover { background: var(--roxo); }
+
+.agenda-nav { display: flex; gap: 1rem; margin-top: 1.25rem; }
+.agenda-nav a, #abrir-favorita { color: var(--violeta); font-weight: 700; }
+.jogo { border-block-start: 1px solid var(--linha); padding-block: .75rem; }
+.jogo p, .jogo h3 { margin: .25rem 0; }
+select { max-width: 100%; font: inherit; }
+@media (max-width: 640px) {
+  .mobile a, .mobile button { flex: 1; min-width: 0; font-size: .75rem; }
+}
+
+/* Navegação e páginas internas */
+.barra nav { gap: .35rem; }
+.barra nav a, .mobile a, .mobile button {
+  border-radius: .5rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.barra nav a { padding: .45rem .7rem; font-size: .88rem; }
+.barra nav a:hover, .mobile a:hover, .mobile button:hover,
+.barra nav [aria-current], .mobile [aria-current] {
+  background: #ffffff20;
+  color: var(--lilas);
+}
+dialog { overflow: auto; padding: clamp(20px, 5vw, 60px); }
+dialog h2 { margin: 0 0 1rem; font-size: clamp(2.5rem, 9vw, 5rem); letter-spacing: -.06em; line-height: 1; }
+.menu-edicao { color: var(--lilas); font-size: .75rem; letter-spacing: .15em; font-weight: 800; }
+dialog > a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 42rem;
+  min-height: 48px;
+  padding: .6rem 1rem;
+  margin-bottom: .45rem;
+  border: 1px solid #ffffff38;
+  border-radius: .5rem;
+  font-weight: 750;
+  text-decoration: none;
+}
+dialog > a::after { content: '→' / ''; color: var(--lilas); }
+dialog > a:hover, dialog > a[aria-current] { background: #ffffff20; }
+dialog button, #escolha button, #trocar {
+  padding: .55rem .9rem;
+  border: 1px solid currentColor;
+  border-radius: .5rem;
+  background: var(--violeta);
+  color: white;
+  font-weight: 700;
+}
+dialog button { background: transparent; }
+.intro { color: var(--violeta); margin-bottom: 1.75rem; }
+.lista-ligas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 245px), 1fr));
+  gap: .85rem;
+  padding: 0;
+  list-style: none;
+}
+.lista-ligas a, .jogo, #escolha, #favorita {
+  padding: 1rem;
+  border: 1px solid var(--linha);
+  border-radius: .65rem;
+  background: white;
+}
+.lista-ligas a { display: grid; grid-template-columns: 1fr auto; align-items: center; text-decoration: none; }
+.lista-ligas small { grid-column: 1 / -1; color: var(--violeta); font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+.lista-ligas a:hover, .agenda-nav a:hover { border-color: var(--violeta); background: #f0e4fb; }
+.lista-ligas span { color: var(--violeta); font-size: 1.3rem; }
+#tabelas { margin-top: 2rem; }
+#tabelas a, article > a, #abrir-favorita { text-underline-offset: .2em; }
+#escolha, #favorita { max-width: 34rem; }
+#escolha label { display: block; font-weight: 700; margin-bottom: .35rem; }
+select { padding: .5rem; border: 1px solid var(--linha); border-radius: .4rem; background: white; color: var(--tinta); }
+.agenda-nav a {
+  padding: .45rem .75rem;
+  border: 1px solid var(--linha);
+  border-radius: .5rem;
+  background: white;
+  text-decoration: none;
+}
+.jogo { margin-block: .6rem; }
+article .tabela-link { border-radius: .5rem; }
+@media (max-width: 760px) {
+  .barra nav { display: none; }
+  body { padding-bottom: calc(68px + env(safe-area-inset-bottom)); }
+  .mobile { position: fixed; z-index: 2; bottom: 0; inset-inline: 0; display: flex; padding: .35rem .3rem calc(.35rem + env(safe-area-inset-bottom)); gap: .2rem; }
+  .mobile a, .mobile button { flex: 1; min-width: 0; min-height: 48px; text-align: center; color: inherit; background: none; border: 0; font-size: .75rem; padding: .25rem 0; }
+  .mobile span { display: block; font-size: 1.25rem; line-height: 1.15; }
+}
+
+.busca {
+  display: block;
+  width: min(100%, 28rem);
+  margin-top: .35rem;
+  padding: .7rem .85rem;
+  border: 1px solid var(--linha);
+  border-radius: .55rem;
+  background: white;
+  color: var(--tinta);
+  font: inherit;
+}
+.filtros-agenda { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 1rem; max-width: 52rem; }
+.filtros-agenda label, label[for="busca-liga"] { font-weight: 700; }
+
+article.liga-topo { max-width: none; font-size: 1rem; }
+.liga-topo h1 { max-width: 26ch; font-size: clamp(2rem, 5vw, 3.75rem); overflow-wrap: anywhere; }
+.liga-acoes { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; }
+.liga-favorita { padding: .6rem 1rem; border: 1px solid var(--linha); border-radius: .5rem; font-weight: 700; text-decoration: none; }
+.liga-favorita:hover { border-color: var(--violeta); }
+.liga-vazia { padding: 1rem 1.25rem; border-radius: .5rem; background: #f0e4fb; }
+
+.manchete, .noticia img { border-radius: 6px; }
+
+.so-leitor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.destaques-home { margin-top: clamp(0px, 2vw, 16px); }
+
+.mobile svg { display: block; margin: 0 auto .2rem; }

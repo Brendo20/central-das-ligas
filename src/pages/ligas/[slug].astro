@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+import { ligas } from '../../ligas.js';
+import { noticias } from '../../noticias-publicadas.js';
+
+export function getStaticPaths() {
+  return ligas.map(liga => ({ params: { slug: liga.slug }, props: { liga } }));
+}
+
+const { liga } = Astro.props;
+const relacionadas = noticias.filter(noticia => noticia.ligas?.includes(liga.slug));
+---
+<Base titulo={liga.nome}>
+  <article class="liga-topo">
+    <a href="/ligas/">← Voltar às ligas</a>
+    <p class="edicao">{liga.ficticia ? "Liga fictícia" : "Campeonato"}</p>
+    <h1>{liga.nome}</h1>
+    <div class="liga-acoes">
+    {liga.tabela && <a class="tabela-link" href={liga.tabela} target="_blank" rel="noopener noreferrer"
+       aria-label="Ver tabela (abre em nova aba)">Ver tabela <span aria-hidden="true">↗</span></a>}
+      <a class="liga-favorita" href="/minha-liga/">Gerenciar favorita</a>
+    </div>
+    </article>
+  <section id="ultimas" aria-labelledby="noticias-liga">
+    <h2 id="noticias-liga">Notícias da liga</h2>
+    {relacionadas.length ? relacionadas.map(noticia => (
+      <a class="noticia" href={`/materias/${noticia.slug}/`}>
+        {noticia.foto && <img src={noticia.foto} alt="" loading="lazy" />}
+        <h3>{noticia.titulo}</h3>
+      </a>
+    )) : <p class="liga-vazia">Ainda não há notícias publicadas sobre esta liga.</p>}
+  </section>
+</Base>

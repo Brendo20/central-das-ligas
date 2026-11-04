@@ -1,0 +1,77 @@
+---
+import Base from '../layouts/Base.astro';
+import { ligas } from '../ligas.js';
+---
+<Base titulo="Minha Liga">
+  <h1>Minha Liga</h1>
+  <p>Escolha a liga que você quer acompanhar neste navegador.</p>
+  <div id="favorita" hidden>
+    <p><a id="abrir-favorita" href="/ligas/"></a></p>
+    <button id="trocar" type="button">Trocar favorita</button>
+  </div>
+  <form id="escolha">
+    <label for="liga">Liga favorita</label>
+    <input class="busca" id="liga" list="favoritas-disponiveis" placeholder="Digite o nome da liga" autocomplete="off" required />
+    <datalist id="favoritas-disponiveis">
+      {ligas.map(liga => <option data-slug={liga.slug} value={liga.nome + (liga.ficticia ? ' (fictícia)' : '')} />)}
+    </datalist>
+
+    <button>Salvar favorita</button>
+  </form>
+  <p id="favorita-aviso" role="status"></p>
+  <noscript><p>Ative o JavaScript para salvar a favorita ou <a href="/ligas/">consulte as ligas</a>.</p></noscript>
+</Base>
+
+<script>
+  const chave = 'giro7:liga-favorita';
+  const formulario = document.querySelector<HTMLFormElement>('#escolha')!;
+  const campo = document.querySelector<HTMLInputElement>('#liga')!;
+  const resumo = document.querySelector<HTMLElement>('#favorita')!;
+  const link = document.querySelector<HTMLAnchorElement>('#abrir-favorita')!;
+  const aviso = document.querySelector<HTMLElement>('#favorita-aviso')!;
+
+  const opcoes = Array.from(document.querySelectorAll<HTMLOptionElement>('#favoritas-disponiveis option'));
+  function mostrarFavorita(slug: string) {
+    const opcao = opcoes.find(item => item.dataset.slug === slug);
+    if (!opcao) return;
+    campo.value = opcao.value;
+    link.href = `/ligas/${slug}/`;
+    link.textContent = opcao.value;
+    resumo.hidden = false;
+    formulario.hidden = true;
+    document.querySelectorAll<HTMLAnchorElement>('a[href="/minha-liga/"]').forEach(atalho => {
+      atalho.href = link.href;
+    });
+  }
+
+  try {
+    mostrarFavorita(localStorage.getItem(chave) ?? '');
+  } catch {
+    aviso.textContent = 'Este navegador não permite salvar a liga favorita.';
+  }
+
+  campo.addEventListener('input', () => campo.setCustomValidity(''));
+  formulario.addEventListener('submit', event => {
+    event.preventDefault();
+    const slug = opcoes.find(item => item.value === campo.value)?.dataset.slug;
+    if (!slug) {
+      campo.setCustomValidity('Escolha uma liga da lista.');
+      campo.reportValidity();
+      return;
+    }
+    try {
+      localStorage.setItem(chave, slug);
+      mostrarFavorita(slug);
+      aviso.textContent = 'Liga favorita salva.';
+      link.focus();
+    } catch {
+      aviso.textContent = 'Este navegador não permite salvar a liga favorita.';
+    }
+  });
+
+  document.querySelector('#trocar')?.addEventListener('click', () => {
+    resumo.hidden = true;
+    formulario.hidden = false;
+    campo.focus();
+  });
+</script>

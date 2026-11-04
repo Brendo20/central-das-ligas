@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import { ligas } from '../ligas.js';
+
+const jogos = [
+  { liga: 'copa-da-vila', times: 'Vila Norte × Horizonte', data: '7 de novembro · 18h', local: 'Arena do Bairro' },
+];
+---
+<Base titulo="Agenda">
+  <p class="edicao">Jogos fictícios</p>
+  <h1>Agenda</h1>
+  <div class="filtros-agenda">
+    <div>
+      <label for="busca-jogo">Buscar jogo</label>
+      <input class="busca" id="busca-jogo" type="search" placeholder="Time, liga ou local" />
+    </div>
+    <div>
+      <label for="filtro-liga">Liga</label>
+      <input class="busca" id="filtro-liga" type="search" list="opcoes-liga" placeholder="Todas as ligas" autocomplete="off" />
+      <datalist id="opcoes-liga">
+        {ligas.map(liga => <option value={liga.nome} />)}
+      </datalist>
+    </div>
+  </div>
+  <section aria-labelledby="proximos">
+    <h2 id="proximos">Próximos jogos</h2>
+    <p id="sem-jogos" role="status" hidden>Nenhum jogo encontrado.</p>
+    {jogos.map(jogo => {
+      const liga = ligas.find(item => item.slug === jogo.liga)?.nome ?? '';
+      return (
+        <div class="jogo" data-liga={liga}>
+          <p class="edicao">{liga} · {jogo.data}</p>
+          <h3>{jogo.times}</h3>
+          <p>{jogo.local}</p>
+        </div>
+      );
+    })}
+  </section>
+</Base>
+<script>
+  const busca = document.querySelector<HTMLInputElement>('#busca-jogo')!;
+  const liga = document.querySelector<HTMLInputElement>('#filtro-liga')!;
+  const jogos = document.querySelectorAll<HTMLElement>('.jogo[data-liga]');
+  const aviso = document.querySelector<HTMLElement>('#sem-jogos')!;
+  const normalizar = (texto: string) => texto.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().trim();
+  function filtrar() {
+    const termo = normalizar(busca.value);
+    const nomeLiga = normalizar(liga.value);
+    jogos.forEach(jogo => {
+      jogo.hidden = !normalizar(jogo.dataset.liga ?? '').includes(nomeLiga)
+        || !normalizar(jogo.textContent ?? '').includes(termo);
+    });
+    aviso.hidden = Array.from(jogos).some(jogo => !jogo.hidden);
+  }
+  busca.addEventListener('input', filtrar);
+  liga.addEventListener('input', filtrar);
+</script>

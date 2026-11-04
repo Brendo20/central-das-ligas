@@ -1,0 +1,17 @@
+---
+import Base from '../../layouts/Base.astro';
+import { noticias } from '../../noticias-publicadas.js';
+export function getStaticPaths() {
+  return noticias.map(noticia => ({ params: { slug: noticia.slug }, props: { noticia } }));
+}
+const { noticia } = Astro.props;
+---
+<Base titulo={noticia.titulo}>
+  <article>
+    <a href="/">← Voltar ao início</a>
+    {!import.meta.env.CMS_URL && <p class="edicao">Matéria fictícia</p>}
+    <h1>{noticia.titulo}</h1>
+    {noticia.foto && <img src={noticia.foto} alt="" />}
+    <p>{noticia.texto}</p>
+  </article>
+</Base>

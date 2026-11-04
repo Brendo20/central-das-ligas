@@ -1,0 +1,34 @@
+---
+import Base from '../../layouts/Base.astro';
+import { ligas } from '../../ligas.js';
+---
+<Base titulo="Ligas">
+  <p class="edicao">Fut7 amador</p><h1>Ligas</h1><p class="intro">Acompanhe notícias e classificações dos campeonatos.</p>
+  <label for="busca-liga">Buscar liga</label><input class="busca" id="busca-liga" type="search" placeholder="Nome da liga" /><p id="sem-ligas" role="status" hidden>Nenhuma liga encontrada.</p>
+  <ul class="lista-ligas">
+    {ligas.map(liga => <li data-nome={liga.nome}><a href={`/ligas/${liga.slug}/`}><small>{liga.ficticia ? "Liga fictícia" : "Campeonato"}</small><strong>{liga.nome}</strong><span aria-hidden="true">→</span></a></li>)}
+  </ul>
+  <section id="tabelas">
+    <h2>Tabelas das ligas</h2>
+    <ul class="lista-ligas">
+      {ligas.filter(liga => liga.tabela).map(liga => (
+        <li><a href={liga.tabela} target="_blank" rel="noopener noreferrer">{liga.nome} ↗ (nova aba)</a></li>
+      ))}
+    </ul>
+  </section>
+</Base>
+
+
+
+
+<script>
+  const busca = document.querySelector<HTMLInputElement>('#busca-liga')!;
+  const itens = document.querySelectorAll<HTMLElement>('[data-nome]');
+  const aviso = document.querySelector<HTMLElement>('#sem-ligas')!;
+  const normalizar = (texto: string) => texto.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().trim();
+  busca.addEventListener('input', () => {
+    const termo = normalizar(busca.value);
+    itens.forEach(item => item.hidden = !normalizar(item.dataset.nome ?? '').includes(termo));
+    aviso.hidden = Array.from(itens).some(item => !item.hidden);
+  });
+</script>

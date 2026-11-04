@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import { noticias } from '../noticias-publicadas.js';
+const destaques = noticias.filter(noticia => noticia.foto).slice(0, 3);
+---
+<Base titulo="Notícias de Fut7 amador">
+  <h1 class="so-leitor">Notícias de Fut7 amador</h1>
+  <section class="destaques destaques-home" aria-label="Manchetes">
+    {destaques.map(noticia => (
+      <a class="manchete" href={`/materias/${noticia.slug}/`}>
+        <img src={noticia.foto} alt="" />
+        <h2>{noticia.titulo}</h2>
+      </a>
+    ))}
+  </section>
+  <section id="ultimas">
+    <h2>Últimas notícias</h2>
+    {noticias.filter(noticia => !destaques.includes(noticia)).map(noticia => (
+      <a class="noticia" href={`/materias/${noticia.slug}/`}>
+        {noticia.foto && <img src={noticia.foto} alt="" loading="lazy" />}
+        <h3>{noticia.titulo}</h3>
+      </a>
+    ))}
+  </section>
+</Base>
