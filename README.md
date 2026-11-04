@@ -1,4 +1,4 @@
-# Giro 7
+# Central das Ligas
 
 Protótipo editorial de Fut7 amador. Requer Node.js 22 ou superior.
 

@@ -8,12 +8,12 @@ const { titulo } = Astro.props;
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{titulo} | Giro 7</title>
+  <title>{titulo} | Central das Ligas</title>
 </head>
 <body data-ligas={JSON.stringify(ligas.map(liga => liga.slug))}>
-  <header><div class="barra"><a class="marca" href="/">GIRO<span>7</span></a><small>FUT7 AMADOR</small><nav aria-label="Principal"><a href="/">Início</a><a href="/#ultimas">Notícias</a><a href="/minha-liga/">Minha Liga</a><a href="/ligas/">Ligas</a><a href="/agenda/">Agenda</a></nav></div></header>
+  <header><div class="barra"><a class="marca" href="/">Central<span> das Ligas</span></a><small>FUT7 AMADOR</small><nav aria-label="Principal"><a href="/">Início</a><a href="/#ultimas">Notícias</a><a href="/minha-liga/">Minha Liga</a><a href="/ligas/">Ligas</a><a href="/agenda/">Agenda</a></nav></div></header>
   <main><slot /></main>
-  <footer>Giro 7 · Protótipo editorial</footer>
+  <footer>Central das Ligas · Protótipo editorial</footer>
   <nav class="mobile" aria-label="Menu no celular">
     <a href="/"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10H3z M9 20v-6h6v6"/></svg>Início</a>
     <a href="/minha-liga/"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z"/></svg>Minha Liga</a>
@@ -23,7 +23,7 @@ const { titulo } = Astro.props;
   </nav>
   <dialog aria-labelledby="menu-titulo">
     <form method="dialog"><button>Fechar ×</button></form>
-    <p class="menu-edicao">GIRO 7 · FUT7 AMADOR</p><h2 id="menu-titulo">Menu</h2><a href="/">Início</a><a href="/#ultimas">Notícias</a><a href="/minha-liga/">Minha Liga</a><a href="/ligas/">Ligas</a><a href="/agenda/">Agenda</a>
+    <p class="menu-edicao">CENTRAL DAS LIGAS · FUT7 AMADOR</p><h2 id="menu-titulo">Menu</h2><a href="/">Início</a><a href="/#ultimas">Notícias</a><a href="/minha-liga/">Minha Liga</a><a href="/ligas/">Ligas</a><a href="/agenda/">Agenda</a>
     <a href="/ligas/#tabelas">Tabelas das ligas</a>
   </dialog>
   <script>

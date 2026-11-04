@@ -37,3 +37,7 @@ A Agenda lista partidas futuras em ordem cronológica, com horários exibidos no
 - Cadastrar uma liga com tabela externa e conferir o botão na página da liga.
 - Cadastrar um jogo futuro e conferir sua exibição e seus filtros na Agenda.
 - Validar com banco e mídia locais antes de preparar a implantação.
+
+## Identidade
+
+O portal se chama Central das Ligas. O domínio planejado é centraldasligas.com.br.

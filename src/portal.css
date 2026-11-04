@@ -189,3 +189,5 @@ article.liga-topo { max-width: none; font-size: 1rem; }
 .destaques-home { margin-top: clamp(0px, 2vw, 16px); }
 
 .mobile svg { display: block; margin: 0 auto .2rem; }
+
+.marca { font-size: clamp(1.15rem, 3vw, 1.85rem); letter-spacing: -.055em; }
